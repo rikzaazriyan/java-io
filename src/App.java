@@ -87,7 +87,6 @@ public class App {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO: handle exception
         }
 
     }
