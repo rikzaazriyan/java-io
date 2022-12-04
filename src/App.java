@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,14 +13,18 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+
 public class App {
 
     public static void main(String[] args) {
         Connection con = connect();
+        System.out.println("Hallo");
         // String currentDirectory = System.getProperty("user.dir");
         // fileReader(this.currentDirectory);
         // csvReader(currentDirectory);
-        // insertUserToDB(con);
+
+
+        insertUserToDB(con);
         List<User> userList = readUserFromDB(con);
         userList = sortUserList(userList);
 
@@ -89,7 +94,7 @@ public class App {
 
     public static Connection connect() {
         Connection conn = null;
-        final String url = "jdbc:postgresql://localhost/mrms";
+        final String url = "jdbc:postgresql://192.168.178.22/mrms";
         final String user = "postgres";
         final String password = "";
         try {
@@ -101,31 +106,31 @@ public class App {
         return conn;
     }
 
-    public static void csvReader(String currentDirectory) {
-        CSVReader cr = new CSVReader(currentDirectory);
-        List<Industry> industryList = cr.readCSVAsIndustryList("csv-sample.csv");
-        System.out.println("Halllo" + industryList.size());
-        for (Industry i : industryList) {
-            try {
-                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                String json = ow.writeValueAsString(i);
-                System.out.println(json);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    // public static void csvReader(String currentDirectory) {
+    //     CSVReader cr = new CSVReader(currentDirectory);
+    //     List<Industry> industryList = cr.readCSVAsIndustryList("csv-sample.csv");
+    //     System.out.println("Halllo" + industryList.size());
+    //     for (Industry i : industryList) {
+    //         try {
+    //             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    //             String json = ow.writeValueAsString(i);
+    //             System.out.println(json);
+    //         } catch (Exception e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    // }
 
-    public static void fileReader(String currentDirectory) {
-        FileReadWrite<Integer> rw = new FileReadWrite<>(currentDirectory);
-        List<Integer> inputList = new ArrayList<>();
-        inputList.add(3);
-        inputList.add(1);
-        inputList.add(2);
-        inputList = rw.sortIntegerList(inputList);
+    // public static void fileReader(String currentDirectory) {
+    //     FileReadWrite<Integer> rw = new FileReadWrite<>(currentDirectory);
+    //     List<Integer> inputList = new ArrayList<>();
+    //     inputList.add(3);
+    //     inputList.add(1);
+    //     inputList.add(2);
+    //     inputList = rw.sortIntegerList(inputList);
 
-        rw.writeFile(inputList, "output.txt");
-        rw.readFile("output.txt");
-        rw.duplicateFile("output.txt", "output2.txt");
-    }
+    //     rw.writeFile(inputList, "output.txt");
+    //     rw.readFile("output.txt");
+    //     rw.duplicateFile("output.txt", "output2.txt");
+    // }
 }
